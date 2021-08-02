@@ -29,7 +29,8 @@
   (average guess (/ x guess)))
 
 ; self-referencing procedure so if <consequent> and <alternative>
-; are evaluated all the time then it will result in an infinite loop
+; are evaluated all the time then it will result in an infinite recursion
+; which results in a "recursion depth exceeded error"
 
 (define (sqrt-iter guess x)
   (new-if (good-enough? guess x)
