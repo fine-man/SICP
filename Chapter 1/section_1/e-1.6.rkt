@@ -1,4 +1,5 @@
 ; solution to exercise 1.6
+; Question :
 ; Alyssa P. Hacker doesn’t see why if needs to
 ; be provided as a special form. “Why can’t I just define it as
 ; an ordinary procedure in terms of cond?” she asks. Alyssa’s
