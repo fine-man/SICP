@@ -117,5 +117,7 @@ test. Does this work beter for small and large numbers? |#
 ; as after one point there are no more digits to provide and all the
 ; evaluated numbers are the same as the previous one and
 ; those evaluated numbers are still not good enough to stop the calculation.
-
+;
+; The improved procedure does not provide a better answer for sqrt of
+; large numbers but it does stop the recursion after the guess stops changing.
 
