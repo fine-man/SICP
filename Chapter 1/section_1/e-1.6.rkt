@@ -20,7 +20,7 @@
   (* x x))
 
 (define (good-enough? guess x)
-  (< (abs (- (square guess) x)) 0.000001))
+  (< (abs (- (square guess) x)) 0.001))
 
 (define (average x y)
   (/ (+ x y) 2))
