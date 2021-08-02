@@ -75,7 +75,7 @@ test. Does this work beter for small and large numbers? |#
 ;
 ; Obviously this is not the correct answer for the sqrt.
 ; The Procedure gave the wrong answer because the tolerance (0.001)
-; is not small enough to provide any accurate answers as
+; is not small enough to provide any accurate answers, as
 ; 0.00001 - (square 0.03135649010771716) < 0.001 so the first procedure
 ; ends our evaluation.
 ;
@@ -84,7 +84,38 @@ test. Does this work beter for small and large numbers? |#
 ; better than the 1st procedure
 ;
 ; 2. Big Numbers :
-
-
+;
+; if we run something like (find-sqrt 1234567891011121314151617)
+; then we get the following guesses
+;
+; 1.0
+; 6.172839455055607e+23
+; 3.0864197275278033e+23
+; 1.5432098637639017e+23
+; ......
+; ......
+; 2425995150445.764
+; 1467443238641.5159
+; 1154374309149.5044
+; 1111921807462.4712
+; 1111111402051.1409
+; 1111111106510.5996
+; 1111111106510.56
+; 1111111106510.56
+; 1111111106510.56
+; endless iteration.....
+;
+; we see that the numbers in the end are not changing but
+; the evaluation is still continued.
+; This is because of the way floating point numbers are stored in computers
+; Floating-Point numbers are only allowed to have a fixed number of digits
+; in their representation so for large numbers there are not many digits left
+; for representation of the digits after the decimal point.
+;
+; Because of this after one point guess refinement starts needing more
+; significant digits for more precision which causes an infinite loop
+; as after one point there are no more digits to provide and all the
+; evaluated numbers are the same as the previous one and
+; those evaluated numbers are still not good enough to stop the calculation.
 
 
