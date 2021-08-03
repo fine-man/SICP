@@ -1,3 +1,11 @@
+; solution to exercise 1.8
+;Newton’s method for cube roots is based on
+; the fact that if y is an approximation to the cube root of x,
+; then a better approximation is given by the value
+; y_new = (x/y^2 + 2y)/3
+; Use this formula to implement a cube-root procedure anal-ogous
+; to the square-root procedure
+
 (define (cube-root x)
   (cube-rt-iter 1.0 x))
 
