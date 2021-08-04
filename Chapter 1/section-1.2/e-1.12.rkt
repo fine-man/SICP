@@ -1,5 +1,5 @@
 ; Solution to Problem 1.12
-; The following pattern of numbers is called Pascal’s triangle.
+; The following pattern of numbers is called Pascal’s triangle.
 ; ------------------------------------------------------------
 ;         1
 ;       1   1
