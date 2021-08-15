@@ -2,7 +2,7 @@
 ; solution to exercise 1.25
 ; Question :
 ; Alyssa P. Hacker complains that we went to
-; a lot of extra work in writing expmod. After all, she says,
+; a lot of extra work in writing expmod. Aer all, she says,
 ; since we already know how to compute exponentials, we
 ; could have simply written
 ;
