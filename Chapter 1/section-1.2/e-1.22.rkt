@@ -1,4 +1,5 @@
 #lang sicp
+
 ; solution to exercise 1.22
 ; Question :
 ; Most Lisp implementations include a prim-
