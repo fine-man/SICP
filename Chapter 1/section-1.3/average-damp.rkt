@@ -13,13 +13,13 @@
   (< (abs (- a b)) tolerance))
 
 
-(define (fixed-point f new-guess)
+(define (fixed-point f first-guess)
   (define (try guess)
     (let ((next (f guess)))
       (if (close-enough? guess next)
           next
           (try next))))
-  (try new-guess))
+  (try first-guess))
 
 ; Average-damp Procedure
 (define (average-damp f)
