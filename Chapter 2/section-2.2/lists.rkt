@@ -103,3 +103,40 @@
 
 (for-each display L)
 ; 1234"done"
+
+; Procedure to find the length of a list
+(define (length items)
+  (if (null? items)
+      0
+      (+ 1 (length (cdr items)))))
+
+(length L)
+; 4
+
+; Procedure to append one list to another
+(define (append l1 l2)
+  (if (null? l1)
+      l2
+      (cons (car l1)
+            (append (cdr l1)
+                    l2))))
+
+(define l1 (list 1 2 3 4))
+(define l2 (list 5 6 7 8))
+
+(append l1 l2)
+; '(1 2 3 4 5 6 7 8)
+
+; Procedure to reverse a list
+(define (reverse-list items)
+  (define (iter lis result)
+    (if (null? lis)
+        result
+        (iter (cdr lis)
+              (cons (car lis)
+                    result))))
+  (iter items nil))
+
+(reverse l1)
+; '(4 3 2 1)
+
