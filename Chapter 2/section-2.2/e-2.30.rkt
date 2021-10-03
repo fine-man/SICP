@@ -1,6 +1,7 @@
 #lang racket
 
 ; Solution of exercise 2.30 of SICP
+; http://community.schemewiki.org/?sicp-ex-2.30
 
 ; Helper Procedures
 

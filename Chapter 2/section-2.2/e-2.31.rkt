@@ -1,6 +1,7 @@
 #lang racket
 
 ; Solution of exercise 2.31 of SICP
+; http://community.schemewiki.org/?sicp-ex-2.31
 
 ; Helper Procedures
 (define (square x) (* x x))
