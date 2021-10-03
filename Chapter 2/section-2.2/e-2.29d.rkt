@@ -1,6 +1,7 @@
 #lang racket
 
 ; Solution to exercise 2.29 part D of SICP
+; Alternate solutions : community.schemewiki.org/?sicp-ex-2.29
 
 ; Procedure to make-mobile with new representation
 (define (make-mobile left right)

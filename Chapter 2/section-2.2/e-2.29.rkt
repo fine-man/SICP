@@ -1,6 +1,7 @@
 #lang racket
 
 ; Solution to exercise 2.29 of SICP
+; Alternate solutions : community.schemewiki.org/?sicp-ex-2.29
 
 ; Constructor for making a mobile
 (define (make-mobile left right)
