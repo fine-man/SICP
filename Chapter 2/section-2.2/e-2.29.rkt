@@ -99,6 +99,18 @@
 (balanced-mobile? xiomi)
 ; #f
 
+;; Test
+(define a (make-mobile (make-branch 2 3) (make-branch 2 3)))
+(total-weight a)
+; 6
+
+;; Test
+(define d (make-mobile (make-branch 10 a) (make-branch 12 5)))
+d
+; '((10 ((2 3) (2 3))) (12 5))
+
+(balanced-mobile? d)
+; #t
 
 
                       
