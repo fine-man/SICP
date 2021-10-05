@@ -14,6 +14,13 @@
         (else (+ (count-leaves (car x))
                  (count-leaves (cdr x))))))
 
+; Procedure which returns the leaves of a tree as a list
+(define (enumerate-tree tree)
+  (cond ((null? tree) tree)
+        ((not (pair? tree)) (list tree))
+        (else (append (enumerate-tree (car tree))
+                      (enumerate-tree (cdr tree))))))
+
 (define (scale-tree tree factor)
   (cond ((null? tree) tree)
         ((not (pair? tree)) (* tree factor))
@@ -27,5 +34,12 @@
              (* sub-tree factor)))
        tree))
 
+
+; Tree-map Procedure, it applies a procedure on the leaves of a tree.
+(define (tree-map proc tree)
+  (cond ((null? tree) tree)
+        ((not (pair? tree)) (proc tree))
+        (else (cons (tree-map proc (car tree))
+                    (tree-map proc (cdr tree))))))
 
 

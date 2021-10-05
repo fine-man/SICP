@@ -79,11 +79,11 @@
 ; an operation to each element of the list as that way we are not just limited to
 ; multiplication but can do any operation of our choosing
 
-(define (map p l)
-  (if (null? l)
-      l
-      (cons (p (car l))
-            (map p (cdr l)))))
+(define (map proc lis)
+  (if (null? lis)
+      lis
+      (cons (proc (car lis))
+            (map proc (cdr lis)))))
 
 ; Then we can redefine scale-list using the general procedure 'map'
 ; (define (scale-list k items)
