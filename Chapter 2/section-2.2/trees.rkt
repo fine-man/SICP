@@ -7,6 +7,7 @@
       (cons (proc (car tree))
             (map proc (cdr tree)))))
 
+; Procedure the count the leaves in a tree
 (define (count-leaves x)
   (cond ((null? x) 0)
         ; pair? is a primitive procedure which tells if it's argument is a pair
