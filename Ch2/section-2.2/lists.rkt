@@ -140,3 +140,10 @@
 (reverse l1)
 ; '(4 3 2 1)
 
+; Procedure to find k-tuples of [1, .... n] s.t each number is distinct
+(define (unique-tuples size max-sum)
+  (cond ((< max-sum size) nil)
+        ((= size 0) (list nil))
+        (else (append (unique-tuples size (- max-sum 1))
+                      (map (lambda (tuple) (cons max-sum tuple))
+                           (unique-tuples (- size 1) (- max-sum 1)))))))

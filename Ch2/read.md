@@ -3,6 +3,7 @@
 - [sicp-ex-2.27](http://community.schemewiki.org/?sicp-ex-2.27)
 - [sicp-ex-2.28](http://community.schemewiki.org/?sicp-ex-2.28)
 - [sicp-ex-2.29](http://community.schemewiki.org/?sicp-ex-2.29)
+- [sicp-ex-2.41](http://community.schemewiki.org/?sicp-ex-2.41)
 
 # People
 - Richard Waters - pg 161 of SICP

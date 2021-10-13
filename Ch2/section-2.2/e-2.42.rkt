@@ -47,6 +47,12 @@
 (define (flatmap proc seq)
   (accumulate append nil (map proc seq)))
 
+; Procedure to find the length of a list
+(define (length items)
+  (if (null? items)
+      0
+      (+ 1 (length (cdr items)))))
+
 ;;------------------------------------------------------------------------------------
 
 ; Procedure that gives a list of all possible solutions to the
@@ -72,14 +78,27 @@
 ; Empty-board
 (define empty-board nil)
 
-
+; Procedure to tell if the kth queen is attacked by other queens or not.
+; To tell if two queens in different columns are attacking each other
+; They will follow one of these 2 conditions
+; 1. (row1 = row2), they both are in the same row
+; 2. abs(row1 - row2) = abs(col1 - col2), they both are on a diagonal.
+; We constructed the diagonal condition using the fact that :
+; when a queen moves along a diagonals, the displacement in the row is the
+; same as the displacement in the column.
+; In the below procedure we iterate over the previous queen positions using 'iter' procedure
+; and check whether they are attacking the kth queen
 (define (safe? k positions)
-  (define row (car (car positions)))
+  (define row (car (car positions))) ; row of the kth queen
   (define (iter pos)
+    ; if (pos) = null, it means that neigther of the previous queens
+    ; attack the current queen so we return true
     (cond ((null? pos) #t)
-          ((= row (car (car pos))) #f)
-          ((= (abs (- row (car (car pos))))
-              (abs (- k (cadr (car pos)))))
+          ; condition to check if queens are on same row
+          ((= row (car (car pos))) #f) 
+          ; condition to check the diagonals
+          ((= (abs (- row (car (car pos)))) ; displacement in rows
+              (abs (- k (cadr (car pos))))) ; displacement in columns
            #f)
           (else (iter (cdr pos)))))
   (iter (cdr positions)))
@@ -103,3 +122,6 @@
 ;  ((4 6) (1 5) (5 4) (2 3) (6 2) (3 1))
 ;  ((3 6) (6 5) (2 4) (5 3) (1 2) (4 1))
 ;  ((2 6) (4 5) (6 4) (1 3) (3 2) (5 1)))
+
+(length (queens 12))
+; 14200

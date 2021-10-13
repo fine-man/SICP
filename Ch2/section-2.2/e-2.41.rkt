@@ -63,6 +63,15 @@
                   (unique-pairs (- k 1))))
            (enumerate-interval 1 n)))
 
+; Procedure to find a k-tuples such that each number <= n and is unique
+(define (unique-tuple size max-num)
+  (flatmap (lambda (i)
+             (map (lambda (tup) (cons i tup))
+                  (if (= size 1)
+                      (list nil)
+                      (unique-tuple (- size 1) (- i 1)))))
+           (enumerate-interval 1 max-num)))
+
 ; Procedure to filter a list to triplets such that each has a sum < S
 (define (triples-of-sum sum n)
   ; Procedure to tell if the sum of a triplet (i, j, k) <= S
