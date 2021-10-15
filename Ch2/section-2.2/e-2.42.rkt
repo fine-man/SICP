@@ -1,5 +1,5 @@
 #lang racket
-
+(provide (all-defined-out))
 ; solution to exercise 2.42 of SICP
 ; http://community.schemewiki.org/?sicp-ex-2.42
 
