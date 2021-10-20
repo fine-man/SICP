@@ -3,6 +3,8 @@
 ; Library of common procedures used in exercises which do not particularly participate
 ; in solution design but are used only as helpers and can be shared among.
 
+(provide (all-defined-out))
+
 (define true #t)
 (define false #f)
 
