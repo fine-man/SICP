@@ -1,6 +1,7 @@
 #lang racket
 
 ; solution to exercise 2.48 of SICP
+; http://community.schemewiki.org/?sicp-ex-2.48 
 (require "e-2.46.rkt") ; for vector implementation
 
 ; constructor for a segment

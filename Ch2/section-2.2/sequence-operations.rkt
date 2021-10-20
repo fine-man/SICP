@@ -84,7 +84,7 @@
           (accumulate op initial (cdr sequence)))))
 
 ; procedure that takes tree as an argument and computes the sum of the
-; squares of the leaves are odd :
+; squares of the leaves that are odd :
 (define (sum-odd-squares tree)
   (accumulate
    + 0 (map square (filter odd? (enumerate-tree tree)))))
@@ -106,14 +106,14 @@
    nil
    (map square (map fib (enumerate-interval 0 n)))))
 
-(list-fib-squares 10)
+; (list-fib-squares 10)
 ; '(0 1 1 4 9 25 64 169 441 1156 3025)
 
 ; Product of squares of odd elements of a sequence
 (define (product-of-squares-of-odd-elements sequence)
   (accumulate * 1 (map square (filter odd? sequence))))
 
-(product-of-squares-of-odd-elements (list 1 2 3 4 5))
+; (product-of-squares-of-odd-elements (list 1 2 3 4 5))
 ; 225
 
 ;-------------------------------------------------------------------------------

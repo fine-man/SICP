@@ -1,5 +1,7 @@
 #lang racket
 
+; solution to exercise 2.49 of SICP
+; http://community.schemewiki.org/?sicp-ex-2.49
 (require "pict-lang.rkt")
 
 ;; Helping vectors
@@ -37,8 +39,23 @@
                                           (make-segment ivec jvec))))
 
 
+; Procedure that takes a frame as an argument and draws
+; a diamond in that frame
 (define diamond (segment->painter (list (make-segment A B)
                                         (make-segment B C)
                                         (make-segment C D)
                                         (make-segment D A))))
+
+;; TEST
+; (diagonals iden-frame)
+
+; (diagonals diag-frame)
+
+; (boundary iden-frame)
+
+; (boundary diag-frame)
+
+; (diamond iden-frame)
+
+; (diamond diag-frame)
 

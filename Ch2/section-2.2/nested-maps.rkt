@@ -105,7 +105,8 @@
                         (enumerate-interval 1 n)))))
 
 ;; TEST
-(prime-sum-pairs 5)
+; (prime-sum-pairs 5)
+; '((2 1 3) (3 2 5) (4 1 5) (4 3 7) (5 2 7))
 
 ;; Problem 2 : finding all the permuantations of a set S
 ; Solution : for each item x in S, recursively generate the sequence of permuantations
@@ -125,4 +126,5 @@
   (filter (lambda (x) (not (= x item))) sequence))
 
 ;; TEST
-(permuantations (list 1 2 3))
+; (permuantations (list 1 2 3))
+; '((1 2 3) (1 3 2) (2 1 3) (2 3 1) (3 1 2) (3 2 1))

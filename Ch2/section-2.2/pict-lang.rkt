@@ -1,5 +1,16 @@
 #lang racket
 
+; Picture language is an interesting example of data abstraction,
+; closure property and higher order functions
+;
+; It is based on manipulating images in order to make more complex
+; patterns by transforming images and then combining those different
+; images in complex ways using other procedures.
+;
+; The language only uses a single primitive called painter(described below)
+; using which we can make primitive and then complex procedures to
+; manipulate images
+
 (require sicp-pict)
 (provide (combine-out (all-defined-out) (all-from-out sicp-pict)))
 ; https://docs.racket-lang.org/sicp-manual/SICP_Picture_Language.html
@@ -173,6 +184,70 @@
       (segments->painter segment-list)
       frame))))
 
+#| implementation of transform-painter
+(define (transform-painter painter origin corner1 corner2)
+  (lambda (frame)
+    (let ((m (frame-coord-map frame)))
+      (let ((new-origin (m origin)))
+        (painter (make-frame
+                  new-origin
+                  (sub-vect (m corner1) new-origin)
+                  (sub-vect (m corner2) new-origin)))))))
+|#
+
+
+;; PAINTER PROCEDURES
+(define (flip-vert painter)
+  (transform-painter painter
+                     (make-vect 0.0 1.0)
+                     (make-vect 1.0 1.0)
+                     (make-vect 0.0 0.0)))
+
+(define (shrink-to-upper-right painter)
+  (transform-painter painter
+                     (make-vect 0.5 0.5)
+                     (make-vect 1 0.5)
+                     (make-vect 0.5 1.0)))
+
+(define (rotate90 painter)
+  (transform-painter painter
+                     (make-vect 1.0 0.0)
+                     (make-vect 1.0 1.0)
+                     (make-vect 0.0 0.0)))
+
+(define (squash-inwards painter)
+  (transform-painter painter
+                     (make-vect 0.0 0.0)
+                     (make-vect 0.65 0.35)
+                     (make-vect 0.35 0.65)))
+
+(define (squash-center painter)
+  (transform-painter painter
+                     (make-vect (/ 1 3) (/ 1 3))
+                     (make-vect (/ 2 3) (/ 1 3))
+                     (make-vect (/ 1 3) (/ 2 3))))
+
+
+#| implementation of beside procedure
+(define (beside painter1 paiter2)
+  (let ((split-point (make-vect 0.5 0.0)))
+    (let ((paint-left
+           (transform-painter
+            painter1
+            (make-vect 0.0 0.0)
+            split-point
+            (make-vect 0.0 1.0)))
+          (paint-right
+           (transform-painter
+            painter2
+            split-point
+            (make-vect 1.0 0.0)
+            (make-vect 0.5 1.0))))
+      (lambda (frame)
+        (paint-left frame)
+        (paint-right frame)))))
+|#
+
 ;; TEST
 ; (define vec1 (make-vect 1 2))
 ; (define vec2 (make-vect 2 1))
@@ -183,3 +258,34 @@
 
 ; ((frame-coord-map frame) zero-vec)
 ; (vect 1 1)
+
+
+;; Levels of Language for robust design
+; The picture language implements some of the critical ideas that
+; were introduced, namely - data abstraction with procedures and data
+;
+; 1. The fundamental data abstraction, painter, are implemented using
+; procedural representation, enabling the language to handle different
+; basic drawing capabilites in a unique way
+;
+; 2. The means of combination satisfy the closure property, which
+; permits us to easily build up complex designs.
+;
+; 3. All the tools required for abstracting procedures are present,
+; which can be used for abstracting means of combination of painters.
+;
+;
+; Stratified design : It is the design philosophy that a complex system
+; should be structured as a sequence of levels that are described using 
+; a sequence of languages.
+; Each level is constructed by combining parts that are regarded as primitives
+; at that level, and the parts constructed at each level are used as 
+; primitives at the next level. The language used at each level of a
+; stratified design has primitives, means of combination and means of abstraction
+; appropriate to that level of detail.
+;
+; Stratified design helps makes programs robust, that is, it makes it likely
+; that small changes in a specification will require correspondingly small
+; changes in the program
+
+
