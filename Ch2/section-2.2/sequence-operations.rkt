@@ -1,6 +1,62 @@
 #lang racket
 
-; Section 2.2.3 of SICP : Sequence operations
+; Section 2.2.3 of SICP : Sequences as conventional interfaces
+;
+#|
+; Consider example of squaring only odd leaves of the tree
+(define (sum-odd-squares tree)
+  (cond ((null? tree) 0) ; if we got to the end of the tree then 0
+        ((not (pair? tree)) ; if we cam to the leaf of the tree than do something
+         (if (odd? tree) ; if leaf is odd square it otherwise skip (by returning 0)
+           (square tree) 0))
+        (else (+ (sum-odd-squares (car tree)) ; preceed with new level
+                 (sum-odd-squares (cdr tree))))))
+
+|#
+; (output (sum-odd-squares (list 1 2 3 4 5)))
+
+
+#| and the second example of producing the list of even fibonacci
+; sequences
+(define (even-fib n)
+  (define (next k)
+    (if (> k n)
+      nil
+      (let ((f (fib k)))
+        (if (even? f)
+          (cons f (next (+ k 1)))
+          (next (+ k 1))))))
+  (next 0))
+|#
+; (output (even-fib 10))
+
+
+; These two procedures are structuraly very different, but they share
+; some commonality in the way the processes behind can be thought of.
+;
+; For the first one we do:
+;  - enumerate the leave trees
+;  - filter only the odd ones
+;  - square them
+;  - make sum of all of them
+;
+; For second:
+;  - enumerate all integers from 0 to n
+;  - compute Fibonacci number of every one
+;  - filter out even ones
+;  - accumulate all of them in one list
+
+; This can be easily seen as a flow of data through the system blocks
+; where data is processed in every block and passed to next block for
+; processing.
+; 1. enumeration (producing a signal)
+; 2. filtering only interesting part of the signal
+; 3. mapping a procedure to the filtered signal
+; 4. accumulation for end result
+
+; If we represent these signals as lists, then we can apply known list
+; operations to manipulate them
+
 ; This section uses abstraction to make procedures that :
 ; 1. Enumerate a tree/list and return a list of all the leaves/elements
 ; 2. Filter the elements of list of leaves/elements and returns a new list

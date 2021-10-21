@@ -108,6 +108,11 @@
 
 
 ;; FRAMES
+; Definition : A frame basically acts as a boundary of the image we are
+; showing, it consists of three vectors - origin vector which specifies
+; the offset of the frame's origin from some absolute origin in the plain,
+; and 2 edge vectors specifiy the offset of the frame's corner from it's origin
+;
 ; renaming the inbuilt frame procedures in sicp-pict package
 ; for a possible internal implementation of the procedures, check e-2.47.rkt
 ;
@@ -145,6 +150,10 @@
 ;; PAINTERS
 ; definition : A painter is represented as a procedure that, given a frame
 ; as argument, draws a particular image shifted and scaled to fit the frame.
+;
+; Note : Although SICP uses the above definition of a painter, the package
+; "sicp-pict" that is used here does not allow frames to be given as
+; arguments to painters.
 
 ; draw-line takes 2 vectors and draws a line btw them on the screen
 (define (draw-line from to)
