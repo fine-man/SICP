@@ -1,4 +1,6 @@
 #lang racket
+
+; section 2.3.2 : Symbollic Differentiation
 (provide (all-defined-out))
 
 #|
