@@ -1,6 +1,7 @@
 #lang racket
 
 ; Solution to exercise 2.72 of SICP
+; http://community.schemewiki.org/?sicp-ex-2.72
 
 ; for implementation of huffman-trees
 (require "huffman-trees.rkt")

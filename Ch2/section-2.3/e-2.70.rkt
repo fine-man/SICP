@@ -22,7 +22,12 @@
 36) 
 |#
 
-(define rock-song '(get a job sha na na na na na na na na get a job sha na na na na na na na na wah yip yip yip yip yip yip yip yip yip sha boom)) 
+(define rock-song '(
+                  get a job sha na na na na na na na na
+                  get a job sha na na na na na na na na
+                  wah yip yip yip yip yip yip yip yip yip
+                  sha boom
+                  )) 
 
 (define encoded-rock-song (encode rock-song rocktree))
 #|
