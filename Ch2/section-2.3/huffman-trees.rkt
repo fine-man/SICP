@@ -33,22 +33,23 @@ Two of ways to solve this are:
 
 Huffman Encoding :
 One particular method of implementing 2nd is the Huffman Encoding method.
-A Huffman code can be represented as a binary-tree whose leaves are the
 A Huffman code can be represented as a binary tree whose leaves are the symbols 
 that are encoded. At each non-leaf node of the tree there is a set containing all 
 the symbols in the leaves that lie below the node. In addition, each symbol at a leaf 
 is assigned a weight (which is its relative frequency), and each non-leaf node contains a 
 weight that is the sum of all the weights of the leaves lying below it.
 
-Example : Fig 2.18 of SICp
+Example : 
+
+![Huffman Tree diagram](./
 |#
 
 #|
 Generating Huffman Trees:
 
 The algorithm for generating a Huffman tree is very simple. 
-The idea is to arrange the tree so that the symbols with the lowest freq
-come farthest from the root. The way we achieve this is :
+The idea is to arrange the tree so that the symbols with the lowest 
+frequency come farthest from the root. The way we achieve this is :
 
 1. Begin with the set of leaf nodes containing symbols and their frequency
 2. Find two leaves with the lowest weight(n1 and n2) and combine them to make a
@@ -105,7 +106,7 @@ node(n0) whose wieght is the sum of weight of n1 and n2
       (cadddr tree)))
 
 ;; Note : Procedures like "symbol" and "weight" are called "generic procedures"
-; because they handle more than one type of data, in this case both leaf and trees
+; because they handle more than one type of data, in this case both leaves and trees
 
 #|
 Decoding Messages
