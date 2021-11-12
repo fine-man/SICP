@@ -4,15 +4,15 @@ http://community.schemewiki.org/?sicp-ex-2.71
 Tree for n = 5:
 let the set of symbols be ((A 1) (B 2) (C 4) (D 8) (E 16))
 
-{A B C D E} 31
+    {A B C D E} 31
 	/  \
-E 16    {A B C D} 15
-		   /  \
-		D 8    {A B C} 7
-				 /  \
-			  C 4	 {A B} 3
-					  /  \
-				   B 2	  A 1
+    E 16    {A B C D} 15
+	       /  \
+	    D 8    {A B C} 7
+		     /  \
+		  C 4	 {A B} 3
+		          /  \
+		       B 2    A 1
 
 The Tree for n = 10 will look similar but it will just be bigger.
 The number of bits required to encode the the most frequent symbol
