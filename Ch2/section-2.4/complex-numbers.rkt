@@ -96,6 +96,152 @@ both representations but still we cannot use both representations in the same pr
 at the same time because our selectors are not generic-selectors yet
 |#
 
+#| Tagged Data : section 2.4.2
+One way to view data abstraction is an implementation of the
+"principle of least commitment"
 
+"The principle of least commitment" suggests us to postpone any choices we need to
+make until the last moment. For example in data abstraction, The abstraction barrier
+formed by the selectors and constructors permits us to defer to the last possible moment
+the choice of a concrete representation of our data objects and thus retain maximum flexibility
+in our system design
 
+To solve the problem of having both rectangular and polar form representation in the same system,
+we add type tags - the symbols "rectangular" or "polar" - as part of each complex number
+so we can find what type of representation it uses.
+
+|#
+
+;;------------------------------------------------------------------------- 
+;; To manipulate tagged data, we need to introduce some new procedures
+
+; Procedure which attatches a tag to a data-object
+(define (attach-tags type-tag contents)
+  (cons type-tag contents))
+
+; Procedure which extracts the tag from a data object
+(define (type-tag datum)
+  (if (pair? datum)
+      (car datum)
+      (error "Bad tagged datum: TYPE-TAG" datum)))
+
+; Procedure to extract the actual data from a tagged data-object
+(define (contents datum)
+  (if (pair? datum)
+      (cdr datum)
+      (error "Bad tagged datum: CONTENTS" datum)))
+
+; Procedure to tell if a complex number uses rectangular form representation
+(define (rectangular? z)
+  (eq? (type-tag z) 'rectangular))
+
+; Procedure to tell if a complex number uses polar form representation
+(define (polar? z)
+  (eq? (type-tags z) 'polar))
+;;----------------------------------------------------------------------------
+
+;; -------------------------------------------------------------------------
+;; Rectangular representation
+
+; Procedure to extract real part of a rectangular form complex number
+(define (real-part-rectangular z) (car z))
+
+; Procedure to extract imag part of a rectangular form complex number
+(define (imag-part-rectangular z) (cdr z))
+
+; Procedure to extract magnitude of a rectangular form complex number
+(define (magnitude-rectangular z)
+  (sqrt (+ (square (real-part-rectangular z))
+           (square (imag-part-rectangular z)))))
+
+; Procedure to extract angle of a rectangular form complex number
+(define (angle-rectangular z)
+  (atan (imag-part-rectangular z)
+        (real-part-rectangular z)))
+
+; make-from-real-imag-rectangular procedure
+(define (make-from-real-imag-rectangular x y)
+  (attach-tag 'rectangular (cons x y)))
+
+; make-from-mag-ang-rectangular procedure
+(define (make-from-mag-ang-rectangular r a)
+  (attach-tag 
+   'rectangular
+   (cons (* r (cos a)) (* r (sin a)))))
+;; --------------------------------------------------------------------------
+
+;; --------------------------------------------------------------------------
+;; Polar Representation
+
+(define (real-part-polar z)
+  (* (magnitude-polar z) 
+     (cos (angle-polar z))))
+
+(define (imag-part-polar z)
+  (* (magnitude-polar z) 
+     (sin (angle-polar z))))
+
+(define (magnitude-polar z) (car z))
+(define (angle-polar z) (cdr z))
+
+(define (make-from-real-imag-polar x y)
+  (attach-tag 
+   'polar
+   (cons (sqrt (+ (square x) (square y)))
+         (atan y x))))
+
+(define (make-from-mag-ang-polar r a)
+  (attach-tag 'polar (cons r a)))
+;; --------------------------------------------------------------------
+
+;; --------------------------------------------------------------------
+;; generic selectors for both rectangular and polar form representation
+
+; generic selector for real part of a complex number
+(define (real-part z)
+  (cond ((rectangular? z)
+         (real-part-rectangular (contents z)))
+        ((polar? z)
+         (real-part-polar (contents z)))
+        (else (error "Unknown type: REAL-PART" z))))
+
+; generic selector for imaginary part of a complex number
+(define (imag-part z)
+  (cond ((rectangular? z)
+         (imag-part-rectangular (contents z)))
+        ((polar? z)
+         (imag-part-polar (contents z)))
+        (else (error "Unknown type: IMAG-PART" z))))
+
+; generic selector for magnitude of a complex number
+(define (magnitude z)
+  (cond ((rectangular? z)
+         (magnitude-rectangular (contents z)))
+        ((polar? z)
+         (magnitude-polar (contents z)))
+        (else (error "Unknown type: 
+               MAGNITUDE" z))))
+
+; generic selector for angle of a complex number
+(define (angle z)
+  (cond ((rectangular? z)
+         (angle-rectangular (contents z)))
+        ((polar? z)
+         (angle-polar (contents z)))
+        (else (error "Unknown type: 
+               ANGLE" z))))
+;;--------------------------------------------------------------------------
+
+;;--------------------------------------------------------------------------
+;; contructor for complex numbers
+
+; make-from-real-imag procedure
+(define (make-from-real-imag x y)
+  (make-from-real-imag-rectangular x y))
+
+; make-from-mag-ang procedure
+(define (make-from-mag-ang r a)
+  (make-from-mag-ang-polar r a))
+
+;;--------------------------------------------------------------------------
 
