@@ -115,3 +115,96 @@ The structure of the above program can be summarised by this :
 <p align="center">
   <img src="./complex-number-structure.png" />
 </p>
+
+## Data-Directed Programming and Additivity
+> The general stratedy of checking the type of a datum and calling an appropriate procedure is called *dispatching on type*.
+
+Implenting dispatch as in the above programs has two weeknesses
+- Generic interface procedures (`real-part`, `imag-part`, `magnitude` and `angle`)
+must know about all the different representations.
+- The problem of name conflict while developing different representations of 
+a data-object separately.
+
+These issues can also be summarized by saying that the earlier technique for
+implementing generic interfaces is not *additive*.
+
+The issue can be solved by using lookup-table for efficient dispatching.
+Each entry in the table are procedures that implements each operation on each type.
+
+```txt
+| Operation | Polar           | Rectangular           |
+| _________ | _______________ | _____________________ |
+| real-part | real-part-polar | real-part-rectangular |
+| magnitude | magnitude-polar | magnitude-rectangular |
+```
+Data-directed programming is the technique of designing programs to work with such a table directly,
+Instead of checking for each type in each generic selector porcedure, we can use a
+single procedure for implementing the interface. The procedure will lookup the combination
+of operation name and argument type to find the correct procedure to apply.
+
+To do this we need two procedures `put` and `get`:
+- `(put op type item)` : install `item` in table at `(op, type)`
+- `(get op type)` : get item at `(op, type)`, return `#f` if no item is there.
+Note : `put` and `get` are implemented in chapter 3
+
+Now we can define rectangular and polar forms in different packages and use `put` to interface them.
+Example:
+```scheme
+;; Package for Rectangular form representation
+
+; install-rectangular-package
+(define (install-rectangular-package)
+  ;; internal procedures
+  (define (real-part z) (car z))
+  (define (imag-part z) (cdr z))
+  (define (make-from-real-imag x y) 
+    (cons x y))
+  (define (magnitude z)
+    (sqrt (+ (square (real-part z))
+             (square (imag-part z)))))
+  (define (angle z)
+    (atan (imag-part z) (real-part z)))
+  (define (make-from-mag-ang r a)
+    (cons (* r (cos a)) (* r (sin a))))
+  ;; interface to the rest of the system
+  (define (tag x) 
+    (attach-tag 'rectangular x))
+  (put 'real-part '(rectangular) real-part)
+  (put 'imag-part '(rectangular) imag-part)
+  (put 'magnitude '(rectangular) magnitude)
+  (put 'angle '(rectangular) angle)
+  (put 'make-from-real-imag 'rectangular
+       (lambda (x y) 
+         (tag (make-from-real-imag x y))))
+  (put 'make-from-mag-ang 'rectangular
+       (lambda (r a) 
+         (tag (make-from-mag-ang r a))))
+  'done)
+```
+Note : Here the type tags are implemented as a list to give us the freedom
+to choose to have multi-type operations.
+
+To implement the generic interface, we need to define a procedure `apply-generic`,
+which looks up the table for some operation and types of argument and apply the resuling
+procedure to arguments
+
+```scheme
+; apple-generic procedure
+(define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let ((proc (get op type-tags)))
+      (if proc
+          (apply proc (map contents args))
+          (error
+           "No method for these types: APPLY-GENERIC"
+           (list op type-tags))))))
+```
+
+Example of generic selector implemented using `apply-generic`:
+
+```scheme
+; real-part selector
+(define (real-part z)
+  (apply-generic 'real-part z))
+```
+
