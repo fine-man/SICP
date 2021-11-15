@@ -208,3 +208,36 @@ Example of generic selector implemented using `apply-generic`:
   (apply-generic 'real-part z))
 ```
 
+## Message Passing
+An alternative implementation stratedy for dispatching is to decompose the table into
+columns and, instead of "intelligent operations" that dispatch on data types, to work with
+"intelligent data objects" that dispatch on operation names. We can do this by arranging things
+so that a data objects, such as a rectangular number, is represented as a procedure that takes
+as input the required operation name and returns the result of performing that operation
+
+Example using `make-from-real-imag` procedure:
+```scheme
+(define (make-from-real-imag x y)
+  (define (dispatch op)
+    (cond ((eq? op 'real-part) x)
+          ((eq? op 'imag-part) y)
+          ((eq? op 'magnitude)
+           (sqrt (+ (square x) (square y))))
+          ((eq? op 'angle) (atan y x))
+          (else
+           (error "Unknown op: 
+            MAKE-FROM-REAL-IMAG" op))))
+  dispatch)
+```
+
+The `apply-generic` procedure now simply becomes:
+```scheme
+(define (apply-generic op arg) (arg op))
+```
+Note : One limitation of this organization is it permits only 
+generic procedures of one argument.
+
+This style of programming is called *message passing*. The name comes 
+from the image that	a data-object is an entity that receives the requested
+operation name as a "message" and then performs that operation on the data.
+

@@ -1,0 +1,36 @@
+Solution to exercise 2.76 of SICP
+http://community.schemewiki.org/?sicp-ex-2.76
+Expression Problem - https://wiki.c2.com/?ExpressionProblem
+
+Explicit dispatching
+
+1. adding new operation won't change the old code because for each type we would only
+need to add another procedure for that particular operation and also a dispatch procedure
+which would check the type of the data-object and apply the approriate procedure for that operation
+
+2. in adding new types, we would have to change the all the old dispatching functions 
+to include a special condition for the new type
+
+
+Message Passing
+
+1. adding new operations, as in the message passing style the data-objects are themselves
+procedures that take the operation to be applied as inputs and so for adding any new 
+functionality we would need to change the definitions of all the different types itself
+to add a condition for this new function/operation
+
+2. for adding new types we won't have to change the old code at all, we would just have to
+define the procedural definition of the new type including all the different operations on that type
+
+
+Data Directed programming
+
+1. Because of the lookup table structure of data directed programming, adding a new operation
+just becomes adding/"putting" a new row in the table which would contain the procedures for 
+the new operation on each type
+
+2. The lookup table structure also allows add new types without changing the old code, to add a
+new type we just have to create a new column which would contain all the operation procedures
+on the new type and 'put' in the table
+
+
